@@ -30,7 +30,7 @@ class ApiController extends AbstractController
 		EntityManagerInterface $entityManager
 	) {
 		$uploadedFile = $request->files->get('excelFile');
-
+		
 		if ($uploadedFile) {
 			if ($uploadedFile->getClientOriginalExtension() === 'xls' || $uploadedFile->getClientOriginalExtension() === 'xlsx') {
 				$spreadsheet = IOFactory::load($uploadedFile->getRealPath());
@@ -117,16 +117,16 @@ class ApiController extends AbstractController
 			$groupMusicaux->setVille($request->get('ville'));
 		}
 		if ($request->get('anneeDebut')) {
-			$groupMusicaux->setAnneeDebut($request->get('anneeDebut'));
+			$groupMusicaux->setAnneeDebut((int) $request->get('anneeDebut'));
 		}
 		if ($request->get('anneeSeparation')) {
-			$groupMusicaux->setAnneSeparation($request->get('anneeSeparation'));
+			$groupMusicaux->setAnneSeparation((int) $request->get('anneeSeparation'));
 		}
 		if ($request->get('fondateurs')) {
 			$groupMusicaux->setFondateurs($request->get('fondateurs'));
 		}
 		if ($request->get('membres')) {
-			$groupMusicaux->setMembres($request->get('membres'));
+			$groupMusicaux->setMembres((int)$request->get('membres'));
 		}
 		if ($request->get('courantMusical')) {
 			$groupMusicaux->setCourantMusical($request->get('courantMusical'));
