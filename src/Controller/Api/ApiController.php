@@ -37,10 +37,9 @@ class ApiController extends AbstractController
 				$worksheet = $spreadsheet->getActiveSheet();
 				$data = $worksheet->toArray();
 
-				// Supprimer la première ligne (en-têtes de colonne)
+				// Supprime la première ligne (en-têtes de colonne)
 				array_shift($data);
 
-				// Parcourir les données et les enregistrer dans l'entité GroupeMusicaux
 				foreach ($data as $row) {
 					$origine = $row[1];
 					$ville = $row[2];
