@@ -108,31 +108,24 @@ class ApiController extends AbstractController
 			return new JsonResponse(["message" => "L'enregistrement n'a pas été trouvé."], 404);
 		}
 
+		$data = json_decode($request->getContent(), true);
 
-		// Vérifier les champs de la demande et les mettre à jour si présents
-		if ($request->get('origine')) {
-			$groupMusicaux->setOrigine($request->get('origine'));
-		}
-		if ($request->get('ville')) {
-			$groupMusicaux->setVille($request->get('ville'));
-		}
-		if ($request->get('anneeDebut')) {
-			$groupMusicaux->setAnneeDebut((int) $request->get('anneeDebut'));
-		}
-		if ($request->get('anneeSeparation')) {
-			$groupMusicaux->setAnneSeparation((int) $request->get('anneeSeparation'));
-		}
-		if ($request->get('fondateurs')) {
-			$groupMusicaux->setFondateurs($request->get('fondateurs'));
-		}
-		if ($request->get('membres')) {
-			$groupMusicaux->setMembres((int)$request->get('membres'));
-		}
-		if ($request->get('courantMusical')) {
-			$groupMusicaux->setCourantMusical($request->get('courantMusical'));
-		}
-		if ($request->get('presentation')) {
-			$groupMusicaux->setPresentation($request->get('presentation'));
+		$fieldsToUpdate = [
+			'origine' => 'setOrigine',
+			'ville' => 'setVille',
+			'anneeDebut' => 'setAnneeDebut',
+			'anneSeparation' => 'setAnneSeparation',
+			'fondateurs' => 'setFondateurs',
+			'membres' => 'setMembres',
+			'courantMusical' => 'setCourantMusical',
+			'presentation' => 'setPresentation',
+		];
+	
+		foreach ($fieldsToUpdate as $field => $setter) {
+			if (array_key_exists($field, $data)) {
+				$value = $data[$field];
+				$groupMusicaux->$setter($value);
+			}
 		}
 
 		try {
